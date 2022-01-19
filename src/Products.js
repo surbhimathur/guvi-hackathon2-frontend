@@ -1,80 +1,141 @@
- export function Products_detail()
+import {useEffect, useState} from "react";
+
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import Fab from '@mui/material/Fab';
+import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom';
+
+export function Products()
 {
     const products=[
         {
             name:"cranes",
             image:"https://cpimg.tistatic.com/03693810/b/5/Rhino-110C-Pick-Carry-Cranes.jpg",
-            heading:"CRANES"
+            heading:"CRANES",
+            time:"7 hrs",
+            price:1500,
+          
         },
         {
-            name:"earthmoving_machinery",
-            image:"https://4.imimg.com/data4/FY/QY/MY-993584/heavy-earthmoving-machine-500x500.png",
-            heading:"EARTHMOVING MACHINERY"
+            name:"bulldozer",
+            image:"https://m.media-amazon.com/images/I/714h-GNuLLL._SL1500_.jpg",
+            heading:"BULLDOZER",
+            time:"7 hrs",
+            price:2000,
         },
         {
-            name:"road_machinery",
-            image:"https://www.schwingstetterindia.com/sites/default/files/Motor-Grader-GR1605_0.jpg",
-            heading:"ROAD MACHINERY"
+            name:"paver",
+            image:"http://static.global-ce.com/upload/upfs/201903/13/f_1552470926480356.jpg",
+            heading:"PAVER",
+            time:"7 hrs",
+            price:2500,
         },
         {
             name:"mixer",
             image:"https://www.heavyequipments.in/uploads/blogimage/Bull%20Concrete%20Mixer%204%20Cum.webp",
-            heading:"TRANSIT MIXER"
+            heading:"TRANSIT MIXER",
+            time:"7 hrs",
+            price:1000,
         },
         {
-            name:"concrete_machinery",
-            image:"https://www.hawkplant.com/assets/images/pages/Concrete_Batching_Mixer_1.jpg",
-            heading:"CONCRETE MACHINERY"
+            name:"boom_placer",
+            image:"https://www.cpenz.co.nz/imagecache/pi_1_100057_6.jpg",
+            heading:"BOOM PLACER PUMP",
+            time:"7 hrs",
+            price:1700,
         },
         {
             name:"air_compressor",
             image:"https://static.grainger.com/rp/s/is/image/Grainger/1VAN8_AS01",
-            heading:"AIR COMPRESSOR"
+            heading:"AIR COMPRESSOR",
+            time:"7 hrs",
+            price:2900,
+            
+        },
+        {
+            name:"jcb",
+            image:"https://5.imimg.com/data5/SELLER/Default/2020/9/EV/DN/FB/3295899/jcb-backhoe-loader-500x500.jpg",
+            heading:"JCB BREAKER",
+            time:"7 hrs",
+            price:3000,
+        },
+        {
+            name:"deisel",
+            image:"https://asmaindustrial.com/wp-content/uploads/2021/01/BD2.jpg",
+            heading:"DEISEL FUEL DISPENSER",
+            time:"7 hrs",
+            price:1900,
+        },
+        {
+            name:"manlift",
+            image:"https://media.invaber.com/2018/12201991611AM_ANSI-63AJ_0.jpg",
+            heading:"MANLIFT",
+            time:"7 hrs",
+            price:2300,
         }
     ];
-    return(
-        <div>
-        {products.map((pr)=><Products name={pr.name} image={pr.image} heading={pr.heading}/>)}
+    
+    const styles={backgroundColor:"white",borderRadius:"5px"}
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const handleChange = e => {
+    setSearchTerm(e.target.value);
+  };
+  useEffect(() => {
+    const results = products.filter((pr) =>
+      pr.name.toLowerCase().includes(searchTerm)
+    );
+    console.log(results);
+    setSearchResults(results);
+  }, [searchTerm]);
         
+    return(
+        <div className="products_detail">
+        {/* <p className="product_heading">PRODUCTS</p> */}
+        <div className="searchBox">
+        
+        <TextField id="Outlined secondary" fullWidth label="Search" placeholder="Enter Product" color="info" style={styles}  variant="filled"  value={searchTerm}
+        onChange={handleChange}/>     
+        </div>
+        
+        <div className="products">
+        {searchResults.map((pr)=><ProductsDetail name={pr.name} image={pr.image} heading={pr.heading} time={pr.time} price={pr.price}/>)}
+        
+        </div>
         </div>
     )
 }
-    export function Products({name,image,heading}) {
-     console.log(name,image,heading);
+
+ function ProductsDetail({name,image,heading,time,price}) {  
+     const history = useHistory();
+     const redirect=()=>{
+        let details=JSON.stringify({name,image,heading,time,price});
+        localStorage.setItem("details",details);
+         history.push({pathname:"/addcart"});
+         
+     }
+     
+     
+     
+  
     return(
-        <div className="products_detail">
-        <p className="product_heading">PRODUCTS</p>
-        <div className="products">
-       
-       <div className="cranes">
+            
+       <div className={name}>
                 <img src={image} alt={name}></img>
                 <h1>{heading}</h1>
-            </div>
-            {/* <div className="cranes">
-                <img src="https://cpimg.tistatic.com/03693810/b/5/Rhino-110C-Pick-Carry-Cranes.jpg" alt="cranes"></img>
-                <h1>CRANES</h1>
-            </div>
-            <div className="earthmoving_machinery">
-                <img src="https://4.imimg.com/data4/FY/QY/MY-993584/heavy-earthmoving-machine-500x500.png" alt="earthmoving"></img>
-                <h1>EARTHMOVING MACHINERY</h1>
-            </div>
-            <div className="road_machinery">
-                <img src="https://www.schwingstetterindia.com/sites/default/files/Motor-Grader-GR1605_0.jpg" alt="road"></img>
-                <h1>ROAD MACHINERY</h1>
-            </div>
-            <div className="mixer">
-                <img src="https://www.heavyequipments.in/uploads/blogimage/Bull%20Concrete%20Mixer%204%20Cum.webp" alt="mixer"></img>
-                <h1>TRANSIT MIXER</h1>
-            </div>
-            <div className="concrete_machinery">
-                <img src="https://www.hawkplant.com/assets/images/pages/Concrete_Batching_Mixer_1.jpg" alt="concrete"></img>
-                <h1>CONCRETE MACHINERY</h1>
-            </div>
-            <div className="air_compressor">
-                <img src="https://static.grainger.com/rp/s/is/image/Grainger/1VAN8_AS01" alt="compressor"></img>
-                <h1>AIR COMPRESSOR</h1>
-            </div> */}
+                   <div className="specification">
+              <p><AccessAlarmIcon color="error" />{time}</p>
+                    <p><CurrencyRupeeIcon color="primary"/>{price}</p>
+                    <div className="add_cart">
+                  <Fab color="primary" aria-label="add" onClick={redirect} >  
+                     <AddShoppingCartIcon />
+                    </Fab> 
+                
+                    </div>
+                </div>
         </div>
-        </div>
+        
     )
 }

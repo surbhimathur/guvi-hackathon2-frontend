@@ -3,10 +3,13 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
 import { About } from "./About";
+import {AddCart} from "./AddCart";
 import { Contact } from "./Contact";
 import { Home } from "./Home";
 import { Navigation } from "./Navigation";
 import { Products } from "./Products";
+
+;
 
 function App() {
   return (
@@ -28,6 +31,10 @@ function App() {
             <Route path="/contact">
               <Contact />
             </Route>
+            <Route path="/addcart">
+              <AddCart />
+            </Route>
+            
           </Switch>
         </section>
       </div>
